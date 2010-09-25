@@ -1,0 +1,14 @@
+<local:MainViewModel 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:RestGuide" >
+    
+    <local:MainViewModel.Restaurants>
+        <local:Restaurant Name="Restaurant" Text="Blah blah blah" Cuisine="cuisine type" Address="123 Smith Street"
+                           Phone="(02) 1234 5678" Url="http://abc.com" Number="3" />
+        <local:Restaurant Name="Restaurant #2" Text="Blah de blah" Cuisine="cuisine type" Address="99 Jones Ave"
+                           Phone="(02) 9999 0000" Url="http://xyz.com.au" Number="5" />
+    </local:MainViewModel.Restaurants>
+        
+    
+</local:MainViewModel>
