@@ -35,12 +35,19 @@ namespace RestGuide
         // When page is navigated to set data context to selected item in list
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            string selectedIndex = "";
-            if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
+            string selectedRestaurantName = "";
+            if (NavigationContext.QueryString.TryGetValue("selectedItemName", out selectedRestaurantName))
             {
-                int index = int.Parse(selectedIndex);
+                selectedRestaurantName = selectedRestaurantName.Replace("%26", "&");
+
+
+                //int index = int.Parse(selectedRestaurantName);
                 //DataContext = App.ViewModel.Items[index];
-                 r= App.ViewModel.Restaurants[index];
+                var re = from rest in App.ViewModel.Restaurants
+                        where rest.Name == selectedRestaurantName
+                        select rest;
+
+                r = re.FirstOrDefault();
                  DataContext=r;
             }
         }

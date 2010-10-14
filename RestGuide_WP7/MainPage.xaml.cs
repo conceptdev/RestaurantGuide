@@ -21,7 +21,7 @@ namespace RestGuide
             InitializeComponent();
 
             // Set the data context of the listbox control to the sample data
-            DataContext = App.ViewModel;
+           
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
 
@@ -33,7 +33,7 @@ namespace RestGuide
                 return;
 
             // Navigate to the new page
-            NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.SelectedIndex, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItemName=" + ((Restaurant)MainListBox.SelectedItem).Name.Replace("&", "%26"), UriKind.Relative));
 
             // Reset selected index to -1 (no selection)
             MainListBox.SelectedIndex = -1;
@@ -46,6 +46,7 @@ namespace RestGuide
             {
                 App.ViewModel.LoadData();
             }
+            DataContext = App.ViewModel.Restaurants;
         }
     }
 }

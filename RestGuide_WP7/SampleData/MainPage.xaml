@@ -8,8 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768" 
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
-    xmlns:cc="clr-namespace:Clarity.Phone.Controls;assembly=Clarity.Phone"
-    xmlns:local="clr-namespace:RestGuide"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -31,34 +29,16 @@
 
         <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-
-            <cc:QuickJumpGrid DataSource="{Binding}"
-                              IsAlphaNumeric="True"
-                              Margin="12,0,0,0"
-                              SelectionChanged="MainListBox_SelectionChanged"
-                              x:Name="MainListBox"
-                              OverlayTileBackground="#8CBF26">
-                <cc:QuickJumpGrid.QuickJumpGridSelector>
-                    <local:RestaurantNameSelector />
-                </cc:QuickJumpGrid.QuickJumpGridSelector>
-                <cc:QuickJumpGrid.GroupHeaderTemplate>
+            <ListBox x:Name="MainListBox" Margin="0,0,-12,0" ItemsSource="{Binding Restaurants}" SelectionChanged="MainListBox_SelectionChanged">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="0,6,0,6" Width="62" Height="62"  Background="#8CBF26">
-                            <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="6,0,0,0" VerticalAlignment="Bottom" />
-                        </Border>
+                      <StackPanel Margin="0,0,0,17" Width="432">
+                          <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                          <TextBlock Text="{Binding Cuisine}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                      </StackPanel>
                     </DataTemplate>
-                </cc:QuickJumpGrid.GroupHeaderTemplate>
-                <cc:QuickJumpGrid.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="0,0,0,17" Width="432">
-                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                            <TextBlock Text="{Binding Cuisine}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </cc:QuickJumpGrid.ItemTemplate>
-            </cc:QuickJumpGrid>
-            
-        
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </Grid>
  
