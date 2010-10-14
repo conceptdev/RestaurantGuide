@@ -19,6 +19,14 @@ namespace RestGuide
       public string CreditCards { get; set; }
       public string Chef { get; set; }
 
+	  public string StartsWith
+	  {
+         get
+         {
+            return Name[0].ToString();
+         }
+	  }
+
       public override string ToString()
       {
          return String.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10}"

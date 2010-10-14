@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml.Serialization;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.Linq;
 
 namespace RestGuide
 {
@@ -22,7 +23,7 @@ namespace RestGuide
     {
 		/// <summary>The main data-set of words by part-of-speech</summary>
 		public List<Restaurant> Restaurants;
-		
+
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
@@ -51,15 +52,39 @@ namespace RestGuide
 			private List<Restaurant> list;
 			private MainViewController mvc;
 			
+			List<string> sectionTitles;
+			Dictionary<int, List<Restaurant>> sectionElements = new Dictionary<int, List<Restaurant>>();
             public TableViewSource (List<Restaurant> list, MainViewController controller)
             {
                 this.list = list;
 				mvc = controller;
+				sectionTitles = (from r in list
+									orderby r.StartsWith
+									select r.StartsWith).Distinct().ToList();
+				foreach (var restaurant in list)
+				{	// group elements together into 'alphabet'
+					int sectionNumber = sectionTitles.IndexOf(restaurant.Name[0].ToString());
+					if (sectionElements.ContainsKey(sectionNumber))
+						sectionElements[sectionNumber].Add(restaurant);
+					else
+						sectionElements.Add(sectionNumber, new List<Restaurant> {restaurant});
+				}
             }
-			
+			public override int NumberOfSections (UITableView tableView)
+			{
+				return sectionTitles.Count;
+			}
+			public override string TitleForHeader (UITableView tableView, int section)
+			{
+				return sectionTitles[section];
+			}
+			public override string[] SectionIndexTitles (UITableView tableView)
+			{
+				return sectionTitles.ToArray();
+			}
 			public override int RowsInSection (UITableView tableview, int section)
             {
-                return list.Count;
+                return sectionElements[section].Count(); //list.Count;
             }
 
             public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
@@ -69,9 +94,9 @@ namespace RestGuide
                 {
                     cell = new UITableViewCell (UITableViewCellStyle.Subtitle, kCellIdentifier);
                 }
-                cell.TextLabel.Text = list[indexPath.Row].Name;
-				cell.DetailTextLabel.Text = list[indexPath.Row].Cuisine;
-				cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+                cell.TextLabel.Text = sectionElements[indexPath.Section][indexPath.Row].Name;
+				cell.DetailTextLabel.Text = sectionElements[indexPath.Section][indexPath.Row].Cuisine;
+
                 return cell;
             }
 			
@@ -84,76 +109,9 @@ namespace RestGuide
                 Console.WriteLine("MAIN TableViewDelegate.RowSelected: Label={0}", list[indexPath.Row].Name);
 				
 				var uivc = new RestaurantViewController(mvc, list[indexPath.Row]);
-				uivc.Title = list[indexPath.Row].Name;
+				uivc.Title = sectionElements[indexPath.Section][indexPath.Row].Name;
 				mvc.NavigationController.PushViewController(uivc,true);
 			}
 		}
-		
-//		#region Obsolete Delegates
-//		[Obsolete("Replaced by UITableViewSource")]
-//        private class TableViewDelegate : UITableViewDelegate
-//        {
-//            private List<Restaurant> list;
-//			private MainViewController mvc;
-//			
-//            public TableViewDelegate(List<Restaurant> list, MainViewController controller)
-//            {
-//                this.list = list;
-//				mvc = controller;
-//            }
-//
-//			/// <summary>
-//			/// If there are subsections in the hierarchy, navigate to those
-//			/// ASSUMES there are _never_ Categories hanging off the root in the hierarchy
-//			/// </summary>
-//			public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
-//            {
-//                Console.WriteLine("MAIN TableViewDelegate.RowSelected: Label={0}", list[indexPath.Row].Name);
-//				
-//				SectionViewController uivc = new SectionViewController(mvc);
-//				uivc.Title = list[indexPath.Row].Name;
-//				//uivc.Sections = mvc.Restaurants[indexPath.Row].Sections;
-//				if (uivc.Sections.Count == 0)
-//				{
-//					Console.WriteLine("Doesn't support 'words' hanging off the root RogetClass elements");
-//				}
-//				else
-//				{
-//					Console.WriteLine("  thesaurus count: " + uivc.Sections.Count);
-//					mvc.NavigationController.PushViewController(uivc,true);
-//            		}
-//			}
-//        }
-//
-//		[Obsolete("Replaced by UITableViewSource")]
-//        private class TableViewDataSource : UITableViewDataSource
-//        {
-//            static NSString kCellIdentifier = new NSString ("MyIdentifier");
-//            private List<Restaurant> list;
-//			private MainViewController mvc;
-//            public TableViewDataSource (List<Restaurant> list, MainViewController controller)
-//            {
-//                this.list = list;
-//				mvc = controller;
-//            }
-//
-//            public override int RowsInSection (UITableView tableview, int section)
-//            {
-//                return list.Count;
-//            }
-//
-//            public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
-//            {
-//                UITableViewCell cell = tableView.DequeueReusableCell (kCellIdentifier);
-//                if (cell == null)
-//                {
-//                    cell = new UITableViewCell (UITableViewCellStyle.Default, kCellIdentifier);
-//                }
-//                cell.TextLabel.Text = list[indexPath.Row].Name;
-//				cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
-//                return cell;
-//            }
-//        }
-//		#endregion
     }
 }
