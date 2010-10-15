@@ -108,7 +108,7 @@ namespace RestGuide
             {
                 Console.WriteLine("MAIN TableViewDelegate.RowSelected: Label={0}", list[indexPath.Row].Name);
 				
-				var uivc = new RestaurantViewController(mvc, list[indexPath.Row]);
+				var uivc = new RestaurantViewController(mvc, sectionElements[indexPath.Section][indexPath.Row]);
 				uivc.Title = sectionElements[indexPath.Section][indexPath.Row].Name;
 				mvc.NavigationController.PushViewController(uivc,true);
 			}
