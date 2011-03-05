@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroller"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent">
+    <TextView
+        android:id="@+id/Title"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textSize="30dip"
+        android:textColor="#FFFFFF"
+      />
+    <TextView
+       android:id="@+id/Cuisine"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+     />
+    <TextView
+       android:id="@+id/Address"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:textStyle="italic"
+     />
+    <TextView
+       android:id="@+id/Telephone"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+     />
+    <TextView
+       android:id="@+id/Website"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:autoLink="web"
+     />
+    <TextView
+       android:id="@+id/Description"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:singleLine="false"
+     />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:background="#8CBF26">
+      <TextView
+       android:id="@+id/HoursLabel"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:text="HOURS"
+       android:textStyle="bold" android:textColor="#FFFFFF"
+     />
+      <TextView
+       android:id="@+id/Hours"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:singleLine="false" android:textColor="#FFFFFF"
+     />
+      <TextView
+       android:id="@+id/CreditCardsLabel"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:text="CARD TYPES ACCEPTED"
+       android:textStyle="bold" android:textColor="#FFFFFF"
+     />
+      <TextView
+       android:id="@+id/CreditCards"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:singleLine="false" android:textColor="#FFFFFF"
+     />
+      <TextView
+       android:id="@+id/ChefLabel"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:textSize="12dip"
+       android:text="CHEF"
+       android:textStyle="bold" android:textColor="#FFFFFF"
+     />
+      <TextView
+      android:id="@+id/Chef"
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:textSize="12dip"
+      android:singleLine="false" android:textColor="#FFFFFF"
+     />
+    </LinearLayout>
+  </LinearLayout>
+</ScrollView>
